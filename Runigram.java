@@ -8,9 +8,9 @@ public class Runigram {
 		//// Hide / change / add to the testing code below, as needed.
 		
 		// Tests the reading and printing of an image:	
-		Color[][] tinypic = read("tinypic.ppm");
-		print(tinypic);
-		System.out.println();
+		//Color[][] tinypic = read("tinypic.ppm");
+		//print(tinypic);
+		//System.out.println();
 
 		// Creates an image which will be the result of various 
 		// image processing operations:
@@ -34,6 +34,8 @@ public class Runigram {
 		// Tests scaling of an image
 		//image = scaled(tinypic, 3, 5);
 		//print(image);
+
+		//test blend
 	}
 
 	/** Returns a 2D array of Color values, representing the image data
@@ -116,7 +118,7 @@ public class Runigram {
 	// the three values r = lum, g = lum, b = lum.
 	private static Color luminance(Color pixel) {
 
-		int lum = (int) Math.round(0.299 * pixel.getRed() + 0.587 * pixel.getGreen() + 0.114 * pixel.getBlue()); 
+		int lum = (int) Math.floor(0.299 * pixel.getRed() + 0.587 * pixel.getGreen() + 0.114 * pixel.getBlue()); 
 		Color greyscale = new Color(lum, lum, lum);
 		return greyscale;
 	}
@@ -163,11 +165,11 @@ public class Runigram {
 	 * values in the two input color.
 	 */
 	public static Color blend(Color c1, Color c2, double alpha) {
-		int red = (int) Math.round(alpha * c1.getRed() + (1 - alpha) * c2.getRed());
-		int green = (int) Math.round(alpha * c1.getGreen() + (1 - alpha) * c2.getGreen());
-		int blue = (int) Math.round(alpha * c1.getBlue() + (1 - alpha) * c2.getBlue());
-		Color blend = new Color(red, green, blue);
-		return blend;
+		int red = (int) (alpha * c1.getRed() + (1 - alpha) * c2.getRed());
+		int green = (int) (alpha * c1.getGreen() + (1 - alpha) * c2.getGreen());
+		int blue = (int) (alpha * c1.getBlue() + (1 - alpha) * c2.getBlue());
+		
+		return new Color(red, green, blue);
 	}
 	
 	/**
@@ -178,8 +180,9 @@ public class Runigram {
 	 */
 	public static Color[][] blend(Color[][] image1, Color[][] image2, double alpha) {
 		Color[][] blendedImage = new Color[image1.length][image1[0].length];
-		for (int i = 0; i < blendedImage.length; i++) {
-			for (int j = 0; j < blendedImage[i].length; j++) {
+		//image2 = scaled (image2, image1[0].length, image1.length);
+		for (int i = 0; i < image1.length; i++) {
+			for (int j = 0; j < image1[0].length; j++) {
 				blendedImage[i][j] = blend(image1[i][j], image2[i][j], alpha);
 			}
 		}
